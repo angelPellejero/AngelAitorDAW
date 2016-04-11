@@ -50,7 +50,7 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
         this.setComponentZOrder(jPanelPrincipal, 1);
         this.setComponentZOrder(jLabelBola, 0);
 
-//        requestFocus();
+
         this.setTitle("Pelota");
         this.setSize(500, 500);//tamaño
         this.setLocationRelativeTo(null);//centramos
@@ -105,7 +105,7 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
             }
             repaint();
         } catch (Exception ex) {
-            Logger.getLogger(com.iescomercio.hilos.Asterisco.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Habido un error");
         }
     }
 }//fin clase
