@@ -23,7 +23,6 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
     //constructor
     public BolaDirecciones() {
 
-
         jPanelPrincipal = new JPanel();
         this.getContentPane().setLayout(new FlowLayout());
 
@@ -46,13 +45,12 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
         jPanelPrincipal.setSize(500, 500);
 
         jLabelBola.setBounds(15, 15, imagenBola.getIconWidth(), imagenBola.getIconHeight());//posicionamos
-        
+
         //orden de apariencia
         this.setComponentZOrder(jPanelPrincipal, 1);
         this.setComponentZOrder(jLabelBola, 0);
-        
+
 //        requestFocus();
-        
         this.setTitle("Pelota");
         this.setSize(500, 500);//tamaño
         this.setLocationRelativeTo(null);//centramos
@@ -61,12 +59,10 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
 
     }//fin constructor
 
-    
     //main 
     public static void main(String[] args) {
         bola = new BolaDirecciones();
     }//fin main
-    
 
     //metodo para la accion del raton CON KEYLISTNER
     @Override
@@ -96,17 +92,18 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
     @Override
     public void run() {
         try {
-            if (aux.equals("izquierda")) {
-                    jLabelBola.setLocation(jLabelBola.getLocation().x - 3, jLabelBola.getLocation().y);
-            } else if (aux.equals("derecha")) {
-                    jLabelBola.setLocation(jLabelBola.getLocation().x + 3, jLabelBola.getLocation().y);
-                }
-            else if (aux.equals("arriba")) {
-                    jLabelBola.setLocation(jLabelBola.getLocation().x, jLabelBola.getLocation().y - 3);
+            if (aux.equals("izquierda") && jLabelBola.getLocation().x > - 187) {
+                jLabelBola.setLocation(jLabelBola.getLocation().x - 3, jLabelBola.getLocation().y);
+            } else if (aux.equals("derecha") && jLabelBola.getLocation().x < 194) {
+                jLabelBola.setLocation(jLabelBola.getLocation().x + 3, jLabelBola.getLocation().y);
+            } else if (aux.equals("arriba") && jLabelBola.getLocation().y > - 152) {
+                jLabelBola.setLocation(jLabelBola.getLocation().x, jLabelBola.getLocation().y - 3);
             } else {
+                if (jLabelBola.getLocation().y < 205) {
                     jLabelBola.setLocation(jLabelBola.getLocation().x, jLabelBola.getLocation().y + 3);
+                }
             }
-             repaint();
+            repaint();
         } catch (Exception ex) {
             Logger.getLogger(com.iescomercio.hilos.Asterisco.class.getName()).log(Level.SEVERE, null, ex);
         }
