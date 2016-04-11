@@ -30,7 +30,8 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
         //ponemos el panel sin layout
         jPanelPrincipal.setLayout(null);
         jPanelPrincipal.setBackground(Color.white);
-        jPanelPrincipal.setFocusable(true);
+        jPanelPrincipal.setFocusable(true);//al arrancar la app
+        jPanelPrincipal.addKeyListener(this);
 
         //imagen dentro del label
         url1 = getClass().getResource("/imagenes/bola.png");
@@ -50,10 +51,8 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
         this.setComponentZOrder(jPanelPrincipal, 1);
         this.setComponentZOrder(jLabelBola, 0);
         
-        jLabelBola.addKeyListener(bola);
-
+//        requestFocus();
         
-        this.pack();//empaquetamos
         this.setTitle("Pelota");
         this.setSize(500, 500);//tamaño
         this.setLocationRelativeTo(null);//centramos
@@ -98,35 +97,18 @@ public class BolaDirecciones extends JFrame implements KeyListener, Runnable {
     public void run() {
         try {
             if (aux.equals("izquierda")) {
-                for (int i = 0; i < 30; i++) {
-                    jLabelBola.setLocation(jLabelBola.getLocation().x - i, jLabelBola.getLocation().y);
-                    repaint();
-                    sleep(100);
-                }
+                    jLabelBola.setLocation(jLabelBola.getLocation().x - 3, jLabelBola.getLocation().y);
             } else if (aux.equals("derecha")) {
-                for (int i = 0; i < 10; i++) {
-                    jLabelBola.setLocation(jLabelBola.getLocation().x + i, jLabelBola.getLocation().y);
-                    repaint();
-                    sleep(100);
+                    jLabelBola.setLocation(jLabelBola.getLocation().x + 3, jLabelBola.getLocation().y);
                 }
-
-            } else if (aux.equals("arriba")) {
-                for (int i = 0; i < 10; i++) {
-                    jLabelBola.setLocation(jLabelBola.getLocation().x, jLabelBola.getLocation().y + i);
-                    repaint();
-                    sleep(100);
-                }
+            else if (aux.equals("arriba")) {
+                    jLabelBola.setLocation(jLabelBola.getLocation().x, jLabelBola.getLocation().y - 3);
             } else {
-                for (int i = 0; i < 10; i++) {
-                    jLabelBola.setLocation(jLabelBola.getLocation().x, jLabelBola.getLocation().y - i);
-                    repaint();
-                    sleep(100);
-                }
-
+                    jLabelBola.setLocation(jLabelBola.getLocation().x, jLabelBola.getLocation().y + 3);
             }
-        } catch (InterruptedException ex) {
+             repaint();
+        } catch (Exception ex) {
             Logger.getLogger(com.iescomercio.hilos.Asterisco.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }//fin clase
