@@ -1,16 +1,12 @@
 package tema12Hilos;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 
-/**
- *
- * @author PROF_VESPERTINO
- */
-public class JuegoArcade extends JFrame implements KeyListener {
+
+public class JuegoArcade extends JFrame implements KeyListener{
 
     private JPanel jpPanel;
     private JLabel jlbAsterisco, jlRaqueta;
@@ -32,7 +28,7 @@ public class JuegoArcade extends JFrame implements KeyListener {
 
         //meter labels al panel null con su posicion inicial
         jpPanel.add(jlbAsterisco);
-        jlbAsterisco.setBounds(10, 10, 10, 10);
+ 
         jpPanel.add(jlRaqueta);
         jlRaqueta.setBounds(120, 220, 50, 20);
 
@@ -45,6 +41,7 @@ public class JuegoArcade extends JFrame implements KeyListener {
         jpPanel.addKeyListener(this);
         jpPanel.setFocusable(true);
 
+        //llamada al hilo
         HiloAsteriscoArcade hac = new HiloAsteriscoArcade(this);
         Thread hilo = new Thread(hac);
         hilo.start();

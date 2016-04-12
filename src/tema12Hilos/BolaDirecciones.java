@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import static java.lang.Thread.sleep;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 public class BolaDirecciones extends JFrame implements KeyListener, Runnable {

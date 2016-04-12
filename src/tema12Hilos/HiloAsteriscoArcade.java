@@ -15,21 +15,29 @@ public class HiloAsteriscoArcade implements Runnable {
     @Override
     public void run() {
         boolean aux = true;
-        int x1 = 3, y1 = 3;
-//        int maxArriba = 25, maxAbajo = 274, maxIzquierda = 10, maxDerecha = 243;// limites de x e y
-        int maxArriba = 10, maxAbajo = 10, maxIzquierda = 10, maxDerecha = 10;
+        int x1 = 1, y1 = 1;
+        int maxArriba = -95, maxAbajo = 160, maxIzquierda = 1, maxDerecha = 287;// limites de x e y
+        juego.getJlbAsterisco().setBounds(0, 0, 5, 5);
         try {
             while (aux == true) {
-                if (juego.getLocation().x == maxIzquierda || juego.getLocation().x == maxDerecha) {
+                if (juego.getJlbAsterisco().getLocation().x == maxIzquierda || juego.getJlbAsterisco().getLocation().x == maxDerecha) {
                     x1 = x1 * (-1);//para cambiar el signo de positivo a negativo o viceversa
                 }
-                if (juego.getLocation().y == maxArriba || juego.getLocation().y == maxAbajo) {
+                if (juego.getJlbAsterisco().getLocation().y == maxArriba || juego.getJlbAsterisco().getLocation().y == maxAbajo) {
                     y1 = y1 * (-1);
                 }
-                
-                juego.getJlbAsterisco().setLocation(juego.getLocation().x + x1, juego.getLocation().y + y1);
+                //comprobando el choque con la raqueta
+                if (juego.getJlbAsterisco().getLocation().x >= juego.getJlRaqueta().getLocation().x
+                        && juego.getJlbAsterisco().getLocation().x <= (juego.getJlRaqueta().getLocation().x + juego.getJlRaqueta().getWidth())
+                        && juego.getJlbAsterisco().getLocation().y == juego.getJlRaqueta().getLocation().y) {
+                    y1 = y1 * (-1);
+                }
+          
+                juego.getJlbAsterisco().setLocation(juego.getJlbAsterisco().getLocation().x + x1, juego.getJlbAsterisco().getLocation().y + y1);
+
+//              System.out.println("x: " + juego.getJlbAsterisco().getLocation().x + " y: " + juego.getJlbAsterisco().getLocation().y);
                 juego.repaint();
-                sleep(1000);
+                sleep(10);
             }
 
         } catch (InterruptedException ex) {
