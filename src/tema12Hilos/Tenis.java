@@ -92,7 +92,7 @@ public class Tenis extends JFrame implements Runnable, KeyListener {
                     y1 = y1 * (-1);
                 }
                 jlbPelota.setLocation(jlbPelota.getLocation().x + x1, jlbPelota.getLocation().y + y1);
-                sleep(5);
+                sleep(2);
                 jlPuntos.setText("Puntos: " + puntos);
             }
         } catch (InterruptedException ex) {
