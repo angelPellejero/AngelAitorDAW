@@ -1,6 +1,8 @@
 package tema10Fichertos;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +30,8 @@ public class Gui extends JFrame implements ActionListener {
     public Gui() {
         //instanciar objetos
         jpBarra = new JProgressBar(0, 100);//Barra de progreso hay que revisar el constructor
+        jpBarra.setStringPainted(true);//NECESARIO PARA QUE MEUSTRA EL % EN EL JPRrogressBar
+
         jlOrigen = new JLabel("Origen");
         jlDestino = new JLabel("Destino");
         blanco1 = new JTextField(" ");
