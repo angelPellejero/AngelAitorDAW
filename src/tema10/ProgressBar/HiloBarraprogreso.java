@@ -31,7 +31,7 @@ public class HiloBarraprogreso implements Runnable {
         FileInputStream fi = null;
         FileOutputStream fo = null;
         byte datos[] = new byte[1024];
-        int lecturaBytes, contador = 0, numeroVueltas = 0, porcentajeBarra = 0;
+        int lecturaBytes, numeroVueltas = 0, porcentajeBarra = 0;
         long longitud = 0;
         File fichero;
         try {
