@@ -51,14 +51,14 @@ public class HiloBarraprogreso implements Runnable {
             
             for (int i = 0; i < numeroVueltas; i++) {
                 lecturaBytes = fi.read(datos);
-                fo.write(datos);
-                //Si la lectura es solo una pasada lleno la barra directamente
-                gui.getBarra().setValue(gui.getBarra().getValue() + porcentajeBarra);
+                fo.write(datos);//leo 1024 por el tamaño indicado en el array
+                gui.getBarra().setValue(gui.getBarra().getValue() + porcentajeBarra);//incrementa la barra
                 sleep(100);
             }
-            int aux = (int)(longitud-numeroVueltas*1024);
-            lecturaBytes = fi.read(datos);
-            fo.write(datos,0,aux);              
+            //como el tamaño no de vueltas no copia todo exacto la siguiente formula lo resuelve
+            int aux = (int)(longitud-numeroVueltas*1024);//guardar el resto que eslo que queda por copiar
+            lecturaBytes = fi.read(datos);//lee el siguiente dato
+            fo.write(datos,0,aux);//lee todo lo restante              
             gui.getBarra().setValue(100);//Esto es en el caso de que haya decimales y la barra no llegue a 100 completamente
             
         } catch (InterruptedException ex) {
