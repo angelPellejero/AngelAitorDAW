@@ -1,10 +1,11 @@
 package tema10.RandomAccessFile;
 
-import tema10.ProgressBar.*;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-public class Diseño extends JFrame implements ActionListener {
+public class Diseño extends JFrame implements ActionListener, WindowListener {
 
     private JPanel jpColumna;
     private JLabel jlOrigen, jlOrigenRuta, jlDestino, jlDestinoRuta, jlTamano;
@@ -22,7 +23,6 @@ public class Diseño extends JFrame implements ActionListener {
     private JButton jbGo, jbOrigen, jbDestino;
     private File fileLectura, fileEscritura;
     private RandomAccessFile raLeer, raEscribir;
-//si lo quiero en balnco Texarea
 
     public Diseño() {
 
@@ -123,7 +123,6 @@ public class Diseño extends JFrame implements ActionListener {
             } else {
                 jlOrigenRuta.setText("fallo al cargar el archivo");
             }
-            //System.out.println(returnVal);
         } else if (e.getSource() == jbDestino) {
             returnVal = jfDestino.showSaveDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -137,34 +136,27 @@ public class Diseño extends JFrame implements ActionListener {
             } else {
                 jlDestinoRuta.setText("fallo al cargar el archivo");
             }
-            // System.out.println(returnVal);
         } else {
             if ((jlOrigenRuta.getText() != "") && (jlDestinoRuta.getText() != "")) {
                 try {
-                    int aux = Integer.parseInt(jlTamanoIndicado.getText());
-                    byte datos[] = new byte[aux];
-//                    //comprobar antes que el archivo este vacio
-                    int valor = raLeer.read();
-                    if (valor != -1) {
+                    if (fileLectura.length() >= fileEscritura.length()) {
+                        int aux = Integer.parseInt(jlTamanoIndicado.getText());
+                        byte datos[] = new byte[aux];
+
                         //posicionar y leer
                         raLeer.seek(fileEscritura.length());
                         raLeer.read(datos);
                         //posicionar y escribir
                         raEscribir.seek(fileEscritura.length());
                         raEscribir.write(datos);
+                        
+                    } else {
+                        System.out.println("El fichero esta completo");
                     }
-
                 } catch (FileNotFoundException ex) {
                     System.out.println("Fichero no encontrado");
                 } catch (IOException ex) {
                     System.out.println("Fallo de la IO");
-                } finally {
-                    try {
-                        raLeer.close();
-                        raEscribir.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(Diseño.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                 }
             }
         }
@@ -172,6 +164,42 @@ public class Diseño extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         Diseño a = new Diseño();
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+        try {
+            raLeer.close();
+            raEscribir.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Diseño.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
     }
 
 }
