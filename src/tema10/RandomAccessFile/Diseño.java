@@ -69,7 +69,7 @@ public class Diseño extends JFrame implements ActionListener, WindowListener {
         jpColumna.add(jbDestino);
         jpColumna.add(jlTamano);
         jpColumna.add(jlTamanoIndicado);
-
+        this.addWindowListener(this);
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         getContentPane().add(jpColumna);
 
@@ -149,9 +149,9 @@ public class Diseño extends JFrame implements ActionListener, WindowListener {
                         //posicionar y escribir
                         raEscribir.seek(fileEscritura.length());
                         raEscribir.write(datos);
-                        
+
                     } else {
-                        System.out.println("El fichero esta completo");
+                        System.out.println("El fichero esta completo puedes copiar " + (fileLectura.length() - fileEscritura.length()) + "byte más ");
                     }
                 } catch (FileNotFoundException ex) {
                     System.out.println("Fichero no encontrado");
@@ -172,17 +172,18 @@ public class Diseño extends JFrame implements ActionListener, WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
         try {
+            JOptionPane.showMessageDialog(this, "Cerrando los ficheros");
             raLeer.close();
             raEscribir.close();
         } catch (IOException ex) {
             Logger.getLogger(Diseño.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
 
     }
 
