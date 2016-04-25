@@ -3,7 +3,6 @@
 //se recorre las 26 veces para cada letra 
 package tema10.Buffered;
 
-import com.sun.javafx.util.Utils;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -90,59 +89,40 @@ public class BufferPractica4 extends JFrame implements ActionListener {
     }
 
     public void leerFichero(File ficOrigen) {
-        //rellenar array con el abecedario
-        int contador = 0;
-        char abecedario[] = new char[27];
-        for (char a = 'A'; a <= 'Z'; a++) {
-            abecedario[contador] = a;
-            contador++;
-        }
-
+        
         //comienta tratameinto
         try {
-            StringBuilder sb = new StringBuilder("");
-            fr = new FileReader(ficOrigen);
-            br = new BufferedReader(fr);
-            contador = 0;
-            String aux[];
-            char letra;
-            br.mark((int) fchOrigen.length());//marco una linea para luego ser resetado
-            for (int i = 0; i < abecedario.length; i++) {   //para comparar todas las letras  
-                while ((linea = br.readLine()) != null) {
-                    aux = Utils.split(linea, " ");    //partir las linea en un array
-                    letra = aux[1].charAt(0);   //coger la primera letra de la calle
-                    if (abecedario[i] == letra) {
-                        sb.append(aux[1] + "\t");   //añadir nombre de calle con salto de linea
+            for (char abc = 'A'; abc <= 'Z'; abc++) {
+                fr = new FileReader(ficOrigen);
+                br = new BufferedReader(fr);
+                StringBuilder sb = new StringBuilder("");
+                linea = br.readLine();
+                while (linea != null) {
+                    if((linea.charAt(10)+"").equals(abc+"")){
+                        sb.append(linea.substring(10, 50)+ "\t");
                     }
+                    linea = br.readLine();
                 }
-                br.reset();//resetear
-                guardarArchivos(abecedario[contador], sb.toString());
-                sb = null;//borrar los datos 
+                br.close();
+                fr.close();
+                guardarArchivos(sb.toString(), abc); 
             }
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(BufferPractica4.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(BufferPractica4.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                br.close();
-                fr.close();
-
-            } catch (IOException ex) {
-                Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
-
     }
 
-    public void guardarArchivos(char letra, String calles) {
+    public void guardarArchivos(String calles, char abc) {
         FileWriter fw = null;
         BufferedWriter bw = null;
         try {
-            fw = new FileWriter(fchDestino.getAbsolutePath() + "\\" + letra + ".txt");
-            bw = new BufferedWriter(fw);
-            bw.write(calles);
+                fw = new FileWriter(fchDestino.getAbsolutePath() + "\\" + abc + ".txt");
+                bw = new BufferedWriter(fw);
+                bw.write(calles);
+                
         } catch (IOException ex) {
             Logger.getLogger(BufferPractica4.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
