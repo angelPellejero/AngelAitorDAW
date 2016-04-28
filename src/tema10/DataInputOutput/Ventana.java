@@ -6,15 +6,15 @@ import javax.swing.*;
 
 public class Ventana extends JFrame implements ActionListener, WindowListener {
 
-    private JPanel jpMain, jpTop, jpAdd, jpDelete;
-    private JButton jbtAdd, jbtDelete, jbtChange, jbtshow, jbtAgreeAdd, jbtAgreeDel;
-    private JTextArea jtName, jtLastName, jtDni, jtDniDel, jtAge;
-    private JLabel jlName, jlLastName, jlDni, jlDniDel, jlAge;
+    private JPanel jpMain, jpTop, jpAdd, jpDelete, jpChange, jpChange2;
+    private JButton jbtAdd, jbtDelete, jbtChange, jbtshow, jbtAgreeAdd, jbtAgreeDel, jbtChangeOne, jbtChangeTwo;
+    private JTextArea jtName, jtNameChan2, jtLastName, jtLastNameChan2, jtDni, jtDniChan2, jtDniDel, jtAge, jtAgeChan2, jtAgreeChange;
+    private JLabel jlName, jlNameChan2, jlLastName, jlLastNameChan2, jlDni, jlDniChan2, jlDniDel, jlAge, jlAgeChan2, jlDniChange;
     private Dimension dimesion;
     private CursorCliente datosFichero;
     private JScrollPane jscrollPanel;
-    private JTable jTable;
     private JTextArea textArea;
+    private static int posicion;
 
     public Ventana() {
         datosFichero = new CursorCliente();
@@ -23,25 +23,41 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
         jbtDelete = new JButton("Borrar");
         jbtDelete.addActionListener(this);
         jbtChange = new JButton("Cambiar");
+        jbtChange.addActionListener(this);
         jbtshow = new JButton("Mostrar");
         jbtshow.addActionListener(this);
         jbtAgreeAdd = new JButton("ok");
         jbtAgreeAdd.addActionListener(this);
         jbtAgreeDel = new JButton("ok");
         jbtAgreeDel.addActionListener(this);
+        jbtChangeOne = new JButton("ok");
+        jbtChangeOne.addActionListener(this);
+        jbtChangeTwo = new JButton("ok");
+        jbtChangeTwo.addActionListener(this);
         dimesion = new Dimension(460, 250);
 
         jlName = new JLabel("Nombre: ");
         jlLastName = new JLabel("Apellidos: ");
         jlDni = new JLabel("DNI: ");
-        jlDniDel = new JLabel("DNI: ");
         jlAge = new JLabel("Edad: ");
+
+        jlDniDel = new JLabel("DNI: ");
+
+        jlNameChan2 = new JLabel("Nombre: ");
+        jlLastNameChan2 = new JLabel("Apellidos: ");
+        jlDniChan2 = new JLabel("DNI: ");
+        jlAgeChan2 = new JLabel("Edad: ");
 
         jtName = new JTextArea("");
         jtLastName = new JTextArea("");
         jtDni = new JTextArea("");
         jtDniDel = new JTextArea("");
         jtAge = new JTextArea("");
+
+        jtNameChan2 = new JTextArea("");
+        jtLastNameChan2 = new JTextArea("");
+        jtDniChan2 = new JTextArea("");
+        jtAgeChan2 = new JTextArea("");
 
         jpMain = new JPanel(null);
         this.add(jpMain);
@@ -57,6 +73,10 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
 
         crearPanelAdd();
         crearPanelDelete();
+        crearPanelMostrar();
+        crearPanelCambiarDatos();
+        crearPanelCambiarDatos2();
+
         this.addWindowListener(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -88,9 +108,54 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
         jpAdd.setVisible(false);
     }
 
+    public void crearPanelCambiarDatos() {
+        jpChange = new JPanel(null);
+        jpMain.add(jpChange);
+        jpChange.setBounds(10, 60, dimesion.width, 100);
+        jlDniChange = new JLabel("DNI del usuario a cambiar los datos: ");
+        jlDniChange.setBounds(10, 10, 250, 30);
+        jpChange.add(jlDniChange);
+        jtAgreeChange = new JTextArea("");
+        jtAgreeChange.setBounds(100, 50, 130, 20);
+        jpChange.add(jtAgreeChange);
+        jbtChangeOne.setBounds(250, 50, 50, 50);
+        jpChange.add(jbtChangeOne);
+        jpChange.setVisible(false);
+    }
+
+    public void crearPanelCambiarDatos2() {
+        jpChange2 = new JPanel(null);
+        jpMain.add(jpChange2);
+        jpChange2.setBounds(10, 60, dimesion.width, 300);
+        jpChange2.add(jlNameChan2);
+        jlNameChan2.setBounds(10, 5, 60, 30);
+        jpChange2.add(jtNameChan2);
+        jtNameChan2.setBounds(80, 5, 130, 20);
+        jpChange2.add(jlLastNameChan2);
+        jlLastNameChan2.setBounds(10, 50, 60, 30);
+        jpChange2.add(jtLastNameChan2);
+        jtLastNameChan2.setBounds(80, 50, 130, 20);
+        jpChange2.add(jlAgeChan2);
+        jlAgeChan2.setBounds(230, 5, 60, 30);
+        jpChange2.add(jtAgeChan2);
+        jtAgeChan2.setBounds(280, 5, 130, 20);
+        jpChange2.add(jlDniChan2);
+        jlDniChan2.setBounds(230, 50, 60, 30);
+        jpChange2.add(jtDniChan2);
+        jtDniChan2.setBounds(280, 50, 130, 20);
+        jpChange2.add(jbtChangeTwo);
+        jbtChangeTwo.setBounds(280, 80, 50, 40);
+
+        jpChange2.setVisible(false);
+    }
+
     public void crearPanelMostrar() {
         textArea = new JTextArea(2, 2);
         jscrollPanel = new JScrollPane(textArea);
+        textArea.setText(datosFichero.mostrarDatos());//rellenar el tex Area con lso datos del fichero
+        jpMain.add(jscrollPanel);
+        jscrollPanel.setBounds(10, 60, dimesion.width - 35, 120);
+        jscrollPanel.setVisible(false);
     }
 
     public void crearPanelDelete() {
@@ -112,13 +177,32 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() == jbtAdd) {
             jpAdd.setVisible(true);
             jpDelete.setVisible(false);
+            jscrollPanel.setVisible(false);
+            jpChange.setVisible(false);
+            jpChange2.setVisible(false);
         } else if (e.getSource() == jbtDelete) {
             jpDelete.setVisible(true);
             jpAdd.setVisible(false);
+            jscrollPanel.setVisible(false);
+            jpChange.setVisible(false);
+            jpChange2.setVisible(false);
+        } else if (e.getSource() == jbtChange) {
+            jpChange.setVisible(true);
+            jscrollPanel.setVisible(false);
+            jpDelete.setVisible(false);
+            jpAdd.setVisible(false);
+            jpChange2.setVisible(false);
+
         } else if (e.getSource() == jbtshow) {
+            jscrollPanel.setVisible(true);
+            jpDelete.setVisible(false);
+            jpAdd.setVisible(false);
+            jpChange.setVisible(false);
+            jpChange2.setVisible(false);
 
         } else if (e.getSource() == jbtAgreeAdd) {//crear nuevo cliente
             Cliente aux = new Cliente();
@@ -131,14 +215,42 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
             aux.setEdad(auxEdad);
             datosFichero.add(aux);
             borrarJtext();
-        } else if (e.getSource() == jbtAgreeDel) {
+        } else if (e.getSource() == jbtAgreeDel) {//borrar cliente
             Cliente aux = new Cliente();
             int auxDni;
             auxDni = Integer.parseInt(jtDniDel.getText());
             aux.setDni(auxDni);
             datosFichero.delete(aux);
             borrarJtext();
+        } else if (e.getSource() == jbtChangeOne) {
+            int dniAUX;
+            Cliente aux = new Cliente();
+            dniAUX = Integer.parseInt(jtAgreeChange.getText());
+            aux.setDni(dniAUX);
+            posicion = datosFichero.userExists(aux);
+            borrarJtext();
+            if (posicion != -1) {
+                jpChange2.setVisible(true);
+                jpChange.setVisible(false);
+                jscrollPanel.setVisible(false);
+                jpDelete.setVisible(false);
+                jpAdd.setVisible(false);
+            }
+        } else if (e.getSource() == jbtChangeTwo) {
+            int auxDni, auxEdad;
+            Cliente aux2 = new Cliente();
+            aux2.setNombre(jtNameChan2.getText());
+            aux2.setApellido(jtLastNameChan2.getText());
+            auxDni = Integer.parseInt(jtDniChan2.getText());
+            aux2.setDni(auxDni);
+            auxEdad = Integer.parseInt(jtAgeChan2.getText());
+            aux2.setEdad(auxEdad);
+            datosFichero.cambiarDatos(posicion, aux2);
         }
+
+    }
+
+    public void cambiarUsuario2() {
 
     }
 
@@ -147,6 +259,12 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
         jtLastName.setText("");
         jtDni.setText("");
         jtAge.setText("");
+        jtDniDel.setText("");
+        jtNameChan2.setText("");
+        jtLastNameChan2.setText("");
+        jtDniChan2.setText("");
+        jtAgeChan2.setText("");
+
     }
 
     @Override

@@ -9,7 +9,7 @@ public class CursorCliente {
 
     private ArrayList<Cliente> coleccion;
     private File fichero;
-    
+
     public CursorCliente() {
         coleccion = new ArrayList();
         fichero = new File("clientes.dat");
@@ -77,16 +77,33 @@ public class CursorCliente {
     public boolean delete(Cliente cliente) {
         int valido = userExists(cliente);
         if (valido != -1) {
-              System.out.println("borrado");
+            System.out.println("borrado");
             return coleccion.remove(cliente);
         } else {
             return false;
         }
     }
-    
+
     //comprobar que ese usuario existe o no
     public int userExists(Cliente cliente) {
         return coleccion.indexOf(cliente);
     }
 
+    public String mostrarDatos() {
+        StringBuilder sb = new StringBuilder("");
+        for (int i = 0; i < coleccion.size(); i++) {
+            sb.append(coleccion.get(i) + "\n");
+        }
+        return sb.toString();
+    }
+
+    public boolean cambiarDatos(int posicion, Cliente nuevo) {
+        if (posicion != -1) {
+            System.out.println("cambido");
+            coleccion.set(posicion, nuevo);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
