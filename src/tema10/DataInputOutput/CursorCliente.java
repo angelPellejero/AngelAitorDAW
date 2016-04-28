@@ -18,25 +18,28 @@ public class CursorCliente {
 
     //cargar los datos del fihcero en la coleccion
     public void cargarFichero() {
-        DataInputStream lector = null;
-        try {//abrir el fichero para su lectura y carga
-            lector = new DataInputStream(new FileInputStream(fichero));
-            while (true) {
-                add(new Cliente(lector.readUTF(), lector.readUTF(), lector.readInt(), lector.readInt()));
-            }
-        } catch (EOFException ex) {
-            System.out.println("Fichero ha sido leido");
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se a ha encontrado el fichero");
-        } catch (IOException ex) {
-            System.out.println("Final del Archivo ");
-        } finally {
-            try {
-                lector.close();
+        if (fichero.exists()) {//Si el archivo no existe no hace nada, asi que luego al guardar datos lo creara
+            DataInputStream lector = null;
+            try {//abrir el fichero para su lectura y carga
+                lector = new DataInputStream(new FileInputStream(fichero));
+                while (true) {
+                    add(new Cliente(lector.readUTF(), lector.readUTF(), lector.readInt(), lector.readInt()));
+                }
+            } catch (EOFException ex) {
+                System.out.println("Fichero ha sido leido");
+            } catch (FileNotFoundException ex) {
+                System.out.println("No se a ha encontrado el fichero");
             } catch (IOException ex) {
-                Logger.getLogger(CursorCliente.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Final del Archivo ");
+            } finally {
+                try {
+                    lector.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(CursorCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+
     }
 
     //guardar datos al cerrar la ventana

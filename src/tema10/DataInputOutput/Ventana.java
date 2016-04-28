@@ -179,25 +179,31 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == jbtAdd) {
+            jpMain.setComponentZOrder(jpAdd, 1);
             jpAdd.setVisible(true);
             jpDelete.setVisible(false);
             jscrollPanel.setVisible(false);
             jpChange.setVisible(false);
             jpChange2.setVisible(false);
         } else if (e.getSource() == jbtDelete) {
+            jpMain.setComponentZOrder(jpDelete, 1);
             jpDelete.setVisible(true);
             jpAdd.setVisible(false);
             jscrollPanel.setVisible(false);
             jpChange.setVisible(false);
             jpChange2.setVisible(false);
         } else if (e.getSource() == jbtChange) {
+            jpMain.setComponentZOrder(jpChange, 1);
             jpChange.setVisible(true);
             jscrollPanel.setVisible(false);
             jpDelete.setVisible(false);
             jpAdd.setVisible(false);
             jpChange2.setVisible(false);
 
-        } else if (e.getSource() == jbtshow) {
+        } else if (e.getSource() == jbtshow) {//cada vez que se le da a mostrar genera de nuevo el area de texto por el tema de la acctualizacion de los datos
+            jscrollPanel.removeAll();//se borra todo lo que tiene este  panel
+            crearPanelMostrar();//se vuelve a crear el panel de mostrar con los datos acctuales
+            jpMain.setComponentZOrder(jscrollPanel, 1);
             jscrollPanel.setVisible(true);
             jpDelete.setVisible(false);
             jpAdd.setVisible(false);
@@ -213,14 +219,20 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
             aux.setDni(auxDni);
             auxEdad = Integer.parseInt(jtAge.getText());
             aux.setEdad(auxEdad);
-            datosFichero.add(aux);
+            if (datosFichero.add(aux))
+                JOptionPane.showMessageDialog(this, "Cliente añadido con exito", "OK", 1);
+            else
+                JOptionPane.showMessageDialog(this, "Ya existe el cliente con este DNI", "Error", 2);
             borrarJtext();
         } else if (e.getSource() == jbtAgreeDel) {//borrar cliente
             Cliente aux = new Cliente();
             int auxDni;
             auxDni = Integer.parseInt(jtDniDel.getText());
             aux.setDni(auxDni);
-            datosFichero.delete(aux);
+            if (datosFichero.delete(aux))
+                JOptionPane.showMessageDialog(this, "Cliente fue borrado con exito", "OK", 1);
+            else
+                JOptionPane.showMessageDialog(this, "Este cliente no existe", "Error", 2);
             borrarJtext();
         } else if (e.getSource() == jbtChangeOne) {
             int dniAUX;
@@ -230,6 +242,7 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
             posicion = datosFichero.userExists(aux);
             borrarJtext();
             if (posicion != -1) {
+                jpMain.setComponentZOrder(jpChange2, 1);
                 jpChange2.setVisible(true);
                 jpChange.setVisible(false);
                 jscrollPanel.setVisible(false);
