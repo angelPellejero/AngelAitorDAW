@@ -21,6 +21,18 @@ public class Barco implements Serializable{
     public void setMatricula(int matricula) {
         this.matricula = matricula;
     }
+
+    public void setNombre_barco(String nombre_barco) {
+        this.nombre_barco = nombre_barco;
+    }
+
+    public void setKm(int km) {
+        this.km = km;
+    }
+
+    public void setAnoFabricacion(int anoFabricacion) {
+        this.anoFabricacion = anoFabricacion;
+    }
     
     
 

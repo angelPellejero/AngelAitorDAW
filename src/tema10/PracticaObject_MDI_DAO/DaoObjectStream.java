@@ -57,24 +57,27 @@ public class DaoObjectStream implements InterfazDAO {
     }
 
     @Override
-    public Barco consulta(int matricula) {
+    public String consulta(int matricula) {
         Barco aux = new Barco();
+        String datos;
         aux.setMatricula(matricula);
         int posicion = existeBarco(aux);
         if (posicion != -1) {
-            return (Barco) coleccion.get(posicion);
-        }else{
+            datos = coleccion.get(posicion) + " ";
+            return datos;
+        } else {
             return null;
         }
     }
 
     @Override
     public Barco dameSiguiente() {
-
+        return null;
     }
 
     @Override
     public Barco dameAnterior() {
+        return null;
     }
 
     @Override
@@ -103,8 +106,24 @@ public class DaoObjectStream implements InterfazDAO {
     }
 
     @Override
-    public Barco salvarDatos() {
-
+    public boolean salvarDatos() {
+        ObjectOutputStream escritor = null;
+        try {
+            escritor = new ObjectOutputStream(new FileOutputStream(fichero));
+            escritor.writeObject(coleccion);
+            return true;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DaoObjectStream.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DaoObjectStream.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                escritor.close();
+            } catch (IOException ex) {
+                Logger.getLogger(DaoObjectStream.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
     }
 
 }

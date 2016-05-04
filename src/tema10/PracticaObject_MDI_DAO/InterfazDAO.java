@@ -10,7 +10,7 @@ public interface InterfazDAO {
 
     public boolean modificacion(int posicion, Barco nuevo);
 
-    public Barco consulta(int matricula);
+    public String consulta(int matricula);
 
     public Barco dameSiguiente();
 
@@ -18,6 +18,6 @@ public interface InterfazDAO {
 
     public boolean cargarDatos();
 
-    public Barco salvarDatos();
+    public boolean salvarDatos();
 
 }
