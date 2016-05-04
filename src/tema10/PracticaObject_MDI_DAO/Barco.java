@@ -33,6 +33,23 @@ public class Barco implements Serializable{
     public void setAnoFabricacion(int anoFabricacion) {
         this.anoFabricacion = anoFabricacion;
     }
+
+    public String getNombre_barco() {
+        return nombre_barco;
+    }
+
+    public int getKm() {
+        return km;
+    }
+
+    public int getMatricula() {
+        return matricula;
+    }
+
+    public int getAnoFabricacion() {
+        return anoFabricacion;
+    }
+    
     
     
 
@@ -60,7 +77,7 @@ public class Barco implements Serializable{
 
     @Override
     public String toString() {
-        return "Nombre: " + nombre_barco + " Km: " + km + " Matricula: " + matricula + ", Año de Fabricación: " + anoFabricacion ;
+        return "Nombre: " + nombre_barco + "\nKm: " + km + "\nMatricula: " + matricula + "\nAño de Fabricación: " + anoFabricacion ;
     }
    
 

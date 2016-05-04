@@ -71,13 +71,31 @@ public class DaoObjectStream implements InterfazDAO {
     }
 
     @Override
-    public Barco dameSiguiente() {
-        return null;
+    public Barco dameAnterior() {
+        Barco aux;
+        if (index > 0) {
+            index--;
+        }
+        if (coleccion.isEmpty() == true) {
+            return null;
+        } else {
+            aux = (Barco) coleccion.get(index);
+            return aux;
+        }
     }
 
     @Override
-    public Barco dameAnterior() {
-        return null;
+    public Barco dameSiguiente() {
+        Barco aux;
+        if (index < coleccion.size()) {
+            index++;
+        }
+        if (coleccion.isEmpty() == true) {
+            return null;
+        } else {
+                aux = (Barco) coleccion.get(index);
+                return aux;
+        }
     }
 
     @Override
@@ -89,6 +107,7 @@ public class DaoObjectStream implements InterfazDAO {
 
                 lector = new ObjectInputStream(new FileInputStream(fichero));
                 coleccion = (ArrayList) lector.readObject(); //introducir los datos al arraylist directamente
+                System.out.println("leido");
                 return true;
             } catch (IOException ex) {
                 Logger.getLogger(DaoObjectStream.class.getName()).log(Level.SEVERE, null, ex);

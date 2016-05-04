@@ -8,12 +8,13 @@ import javax.swing.event.InternalFrameListener;
 
 public class Ventana extends JInternalFrame implements ActionListener, InternalFrameListener {
 
-    private JPanel jpMain, jpTop, jpAdd, jpDelete, jpChange, jpChange2, jpShowByNumberPlate;
+    private JPanel jpMain, jpTop, jpAdd, jpDelete, jpChange, jpChange2, jpShowByNumberPlate, jpNavigate;
     private JButton jbtAdd, jbtDelete, jbtChange, jbtShow, jbtshowLeft, jbtshowRight, jbtAgreeAdd, jbtAgreeDel, jbtChangeOne, jbtChangeTwo;
     private JButton jbShowByNumberPlate;
     private JTextArea jtName, jtNameChan2, jtKm, jtKmChan2, jtMatricula, jtMatriculaChan2, jtMatriculaDel, jtAge, jtAgeChan2, jtAgreeChange;
+    private JTextArea jtNameNavigate, jtKmNavigate, jtMatriculaNavigate, jtAgeNavigate;
     private JLabel jlName, jlNameChan2, jlKm, jlKmChan2, jlMatricula, jlMatriculaChan2, jlMatriculaDel, jlAge, jlAgeChan2, jlMatriChange;
-    private JLabel jlShowByNumberPlate;
+    private JLabel jlShowByNumberPlate, jlNameNavigate, jlKmNavigate, jlMatriculaNavigate, jlAgeNavigate;
     private Dimension dimesion;
     private DaoObjectStream datosFichero;
     private JScrollPane jscrollPanel;
@@ -43,13 +44,18 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
         jbtChangeTwo = new JButton("ok");
         jbtChangeTwo.addActionListener(this);
         jbShowByNumberPlate = new JButton("ok");
-        jbShowByNumberPlate = new JButton("ok");
+        jbShowByNumberPlate.addActionListener(this);
         dimesion = new Dimension(460, 250);
 
         jlName = new JLabel("Nombre: ");
         jlKm = new JLabel("Km: ");
         jlMatricula = new JLabel("Matricula: ");
         jlAge = new JLabel("Año: ");
+
+        jlNameNavigate = new JLabel("Nombre: ");
+        jlKmNavigate = new JLabel("Km: ");
+        jlMatriculaNavigate = new JLabel("Matricula: ");
+        jlAgeNavigate = new JLabel("Año: ");
 
         jlMatriculaDel = new JLabel("Matricula: ");
 
@@ -63,6 +69,11 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
         jtMatricula = new JTextArea("");
         jtMatriculaDel = new JTextArea("");
         jtAge = new JTextArea("");
+
+        jtNameNavigate = new JTextArea("");
+        jtKmNavigate = new JTextArea("");
+        jtMatriculaNavigate = new JTextArea("");
+        jtAgeNavigate = new JTextArea("");
 
         jtNameChan2 = new JTextArea("");
         jtKmChan2 = new JTextArea("");
@@ -88,6 +99,7 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
         crearPanelMostrar();
         crearPanelCambiarDatos();
         crearPanelCambiarDatos2();
+        crearPanelNavegar();
 
         addInternalFrameListener(this);//nuevo listener similar al de windowListener para el JInternalFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -136,7 +148,6 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
         jpChange.add(jbtChangeOne);
         jpChange.setVisible(false);
     }
-
 
     public void crearPanelCambiarDatos2() {
         jpChange2 = new JPanel(null);
@@ -196,6 +207,29 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
         jpDelete.setVisible(false);
     }
 
+    public void crearPanelNavegar() {
+        jpNavigate = new JPanel(null);
+        jpMain.add(jpNavigate);
+        jpNavigate.setBounds(10, 60, dimesion.width, 300);
+        jpNavigate.add(jlNameNavigate);
+        jlNameNavigate.setBounds(10, 5, 60, 30);
+        jpNavigate.add(jtNameNavigate);
+        jtNameNavigate.setBounds(80, 5, 130, 20);
+        jpNavigate.add(jlKmNavigate);
+        jlKmNavigate.setBounds(10, 50, 60, 30);
+        jpNavigate.add(jtKmNavigate);
+        jtKmNavigate.setBounds(80, 50, 130, 20);
+        jpNavigate.add(jlAgeNavigate);
+        jlAgeNavigate.setBounds(230, 5, 60, 30);
+        jpNavigate.add(jtAgeNavigate);
+        jtAgeNavigate.setBounds(280, 5, 130, 20);
+        jpNavigate.add(jlMatriculaNavigate);
+        jlMatriculaNavigate.setBounds(230, 50, 60, 30);
+        jpNavigate.add(jtMatriculaNavigate);
+        jtMatriculaNavigate.setBounds(280, 50, 130, 20);
+        jpNavigate.setVisible(false);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbtAdd) {
@@ -206,6 +240,7 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpChange.setVisible(false);
             jpChange2.setVisible(false);
             jpShowByNumberPlate.setVisible(false);
+            jpNavigate.setVisible(false);
         } else if (e.getSource() == jbtAgreeAdd) {//Dar de alta a un Barco
             Barco aux = new Barco();
             aux.setNombre_barco(jtName.getText());
@@ -226,6 +261,7 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpChange.setVisible(false);
             jpChange2.setVisible(false);
             jpShowByNumberPlate.setVisible(false);
+            jpNavigate.setVisible(false);
         } else if (e.getSource() == jbtAgreeDel) {//Pulsado el boton de borrar el barco
             int auxmatricula;
             auxmatricula = Integer.parseInt(jtMatriculaDel.getText());
@@ -235,7 +271,7 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
                 JOptionPane.showMessageDialog(this, "Este Barco no existe", "Error", 2);
             }
             borrarJtext();
-        } else if (e.getSource() == jbtChange) {
+        } else if (e.getSource() == jbtChange) {//muestra panel de modificar datos 
             jpMain.setComponentZOrder(jpChange, 1);
             jpChange.setVisible(true);
             jscrollPanel.setVisible(false);
@@ -243,7 +279,8 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpAdd.setVisible(false);
             jpChange2.setVisible(false);
             jpShowByNumberPlate.setVisible(false);
-        } else if (e.getSource() == jbtChangeOne) {
+            jpNavigate.setVisible(false);
+        } else if (e.getSource() == jbtChangeOne) {//envia la matricula del barco a cambiar datos
             int auxKM;
             Barco aux = new Barco();
             auxKM = Integer.parseInt(jtAgreeChange.getText());
@@ -258,17 +295,16 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
                 jpAdd.setVisible(false);
                 jpShowByNumberPlate.setVisible(false);
                 jscrollPanel.setVisible(false);
+                jpNavigate.setVisible(false);
             }
-        } else if (e.getSource() == jbtChangeTwo) {
+        } else if (e.getSource() == jbtChangeTwo) { //manda los datos del barco modificado
             Barco aux2 = new Barco();
             aux2.setNombre_barco(jtNameChan2.getText());
             aux2.setKm(Integer.parseInt(jtKmChan2.getText()));
             aux2.setMatricula(Integer.parseInt(jtMatriculaChan2.getText()));
             aux2.setAnoFabricacion(Integer.parseInt(jtAgeChan2.getText()));
             datosFichero.modificacion(posicion, aux2);
-        } else if (e.getSource() == jbtShow) {//cada vez que se le da a mostrar genera de nuevo el area de texto por el tema de la acctualizacion de los datos
-            jscrollPanel.removeAll();//se borra todo lo que tiene este  panel
-            crearPanelMostrar();//se vuelve a crear el panel de mostrar con los datos acctuales
+        } else if (e.getSource() == jbtShow) { //muestra el panel consulta
             jpMain.setComponentZOrder(jscrollPanel, 1);
             jscrollPanel.setVisible(true);
             jpShowByNumberPlate.setVisible(true);
@@ -276,11 +312,52 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpAdd.setVisible(false);
             jpChange.setVisible(false);
             jpChange2.setVisible(false);
-        }else if (e.getSource() == jbShowByNumberPlate){
+            jpNavigate.setVisible(false);
+        } else if (e.getSource() == jbShowByNumberPlate) {//muestra datos del barco por el boton ok en consulta
             int auxMatricula;
+            String infoBarco;
             auxMatricula = Integer.parseInt(jtShowByNumberPlate.getText().trim());
-            textArea.setText(datosFichero.consulta(auxMatricula));
+            infoBarco = datosFichero.consulta(auxMatricula);
+            textArea.setText(infoBarco);
+        } else if (e.getSource() == jbtshowLeft) {//mostrar datos dej anterior barco
+            jpMain.setComponentZOrder(jpNavigate, 1);
+            jpNavigate.setVisible(true);
+            jscrollPanel.setVisible(false);
+            jpShowByNumberPlate.setVisible(true);
+            jpDelete.setVisible(false);
+            jpAdd.setVisible(false);
+            jpChange.setVisible(false);
+            jpChange2.setVisible(false);
+
+            Barco aux = datosFichero.dameAnterior();
+            if (aux == null) {
+                JOptionPane.showMessageDialog(this, "Tienes que meter datos primero", "OK", 1);
+            } else {
+                rellenar(aux);
+            }
+        } else if (e.getSource() == jbtshowRight) {//mostrar datos del siguiente barco
+            jpMain.setComponentZOrder(jpNavigate, 1);
+            jpNavigate.setVisible(true);
+            jscrollPanel.setVisible(false);
+            jpShowByNumberPlate.setVisible(true);
+            jpDelete.setVisible(false);
+            jpAdd.setVisible(false);
+            jpChange.setVisible(false);
+            jpChange2.setVisible(false);
+            Barco aux = datosFichero.dameSiguiente();
+            if (aux == null) {
+                JOptionPane.showMessageDialog(this, "Tienes que meter datos primero", "OK", 1);
+            } else {
+                rellenar(aux);
+            }
         }
+    }
+
+    public void rellenar(Barco aux) {
+        jtNameNavigate.setText(aux.getNombre_barco());
+        jtKmNavigate.setText(aux.getKm() + "");
+        jtMatriculaNavigate.setText(aux.getMatricula() + "");
+        jtAgeNavigate.setText(aux.getAnoFabricacion() + "");
     }
 
     public void borrarJtext() {
