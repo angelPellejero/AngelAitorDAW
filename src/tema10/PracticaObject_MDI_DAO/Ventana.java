@@ -379,6 +379,7 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
         datosFichero.salvarDatos();
+        dispose();//Cierra la ventana
     }
 
     @Override

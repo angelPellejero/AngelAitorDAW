@@ -40,6 +40,7 @@ public class DaoObjectStream implements InterfazDAO {
         int posicion = existeBarco(aux);
         if (posicion != -1) {
             coleccion.remove(posicion);
+            index = 0;
             return true;
         } else {
             return false;
@@ -87,14 +88,14 @@ public class DaoObjectStream implements InterfazDAO {
     @Override
     public Barco dameSiguiente() {
         Barco aux;
-        if (index < coleccion.size()) {
+        if (index < coleccion.size() - 1) {
             index++;
         }
         if (coleccion.isEmpty() == true) {
             return null;
         } else {
-                aux = (Barco) coleccion.get(index);
-                return aux;
+            aux = (Barco) coleccion.get(index);
+            return aux;
         }
     }
 
