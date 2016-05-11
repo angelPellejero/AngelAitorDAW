@@ -19,9 +19,11 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
     private Dimension dimesion;
     private JScrollPane jscrollPanel;
     private JTextArea textArea, jtShowByNumberPlate;
-    private static int posicion;
+    private static Object oldVelero;
+    private DAO_Veleros datosVelero;
 
     public Ventana() {
+        datosVelero = new DAO_Veleros();
         jbtAdd = new JButton("Alta");
         jbtAdd.addActionListener(this);
         jbtDelete = new JButton("baja");
@@ -100,7 +102,6 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
         setIconifiable(true);
         setVisible(true);
     }
-    
 
     public void crearPanelAdd() {
         jpAdd = new JPanel(null);
@@ -200,7 +201,6 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
         jpDelete.setVisible(false);
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbtAdd) {
@@ -213,17 +213,17 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpShowByNumberPlate.setVisible(false);
             jpNavigate.setVisible(false);
         } else if (e.getSource() == jbtAgreeAdd) {//Dar de alta a un Barco
-//            Barco aux = new Barco();
-//            aux.setNombre_barco(jtName.getText());
-//            aux.setKm(Integer.parseInt(jtKm.getText()));
-//            aux.setMatricula(Integer.parseInt(jtMatricula.getText()));
-//            aux.setAnoFabricacion(Integer.parseInt(jtAge.getText()));
-//            if (datosFichero.alta(aux)) {
-//                JOptionPane.showMessageDialog(this, "Barco añadido con exito", "OK", 1);
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Ya existe un Barco con esta natricula", "Error", 2);
-//            }
-//            borrarJtext();
+            Velero aux = new Velero();
+            aux.setNombre_barco(jtName.getText());
+            aux.setKm(Integer.parseInt(jtKm.getText()));
+            aux.setMatricula(Integer.parseInt(jtMatricula.getText()));
+            aux.setAnoFabricacion(Integer.parseInt(jtAge.getText()));
+            if (datosVelero.alta(aux)) {
+                JOptionPane.showMessageDialog(this, "Barco añadido con exito", "OK", 1);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ya existe un Barco con esta natricula", "Error", 2);
+            }
+            borrarJtext();
         } else if (e.getSource() == jbtDelete) { //mostrar el panel de borrar barco por matricula
             jpMain.setComponentZOrder(jpDelete, 1);
             jpDelete.setVisible(true);
@@ -234,14 +234,14 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpShowByNumberPlate.setVisible(false);
             jpNavigate.setVisible(false);
         } else if (e.getSource() == jbtAgreeDel) {//Pulsado el boton de borrar el barco
-//            int auxmatricula;
-//            auxmatricula = Integer.parseInt(jtMatriculaDel.getText());
-//            if (datosFichero.baja(auxmatricula)) {
-//                JOptionPane.showMessageDialog(this, "El Barco fue borrado con exito", "OK", 1);
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Este Barco no existe", "Error", 2);
-//            }
-//            borrarJtext();
+            Velero aux = new Velero();
+            aux.setMatricula(Integer.parseInt(jtMatriculaDel.getText()));
+            if (datosVelero.baja(aux)) {
+                JOptionPane.showMessageDialog(this, "El Barco fue borrado con exito", "OK", 1);
+            } else {
+                JOptionPane.showMessageDialog(this, "Este Barco no existe", "Error", 2);
+            }
+            borrarJtext();
         } else if (e.getSource() == jbtChange) {//muestra panel de modificar datos 
             jpMain.setComponentZOrder(jpChange, 1);
             jpChange.setVisible(true);
@@ -252,13 +252,11 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpShowByNumberPlate.setVisible(false);
             jpNavigate.setVisible(false);
         } else if (e.getSource() == jbtChangeOne) {//envia la matricula del barco a cambiar datos
-//            int auxKM;
-//            Barco aux = new Barco();
-//            auxKM = Integer.parseInt(jtAgreeChange.getText());
-//            aux.setMatricula(auxKM);
-//            posicion = datosFichero.existeBarco(aux);
-//            borrarJtext();
-            if (posicion != -1) {
+            Velero aux = new Velero();
+            aux.setMatricula(Integer.parseInt(jtAgreeChange.getText())); 
+            borrarJtext();
+            if (datosVelero.existeBarco(aux)) {
+                oldVelero = (Velero)aux;
                 jpMain.setComponentZOrder(jpChange2, 1);
                 jpChange2.setVisible(true);
                 jpChange.setVisible(false);
@@ -269,12 +267,12 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
                 jpNavigate.setVisible(false);
             }
         } else if (e.getSource() == jbtChangeTwo) { //manda los datos del barco modificado
-//            Barco aux2 = new Barco();
-//            aux2.setNombre_barco(jtNameChan2.getText());
-//            aux2.setKm(Integer.parseInt(jtKmChan2.getText()));
-//            aux2.setMatricula(Integer.parseInt(jtMatriculaChan2.getText()));
-//            aux2.setAnoFabricacion(Integer.parseInt(jtAgeChan2.getText()));
-//            datosFichero.modificacion(posicion, aux2);
+            Velero aux2 = new Velero();
+            aux2.setNombre_barco(jtNameChan2.getText());
+            aux2.setKm(Integer.parseInt(jtKmChan2.getText()));
+            aux2.setMatricula(Integer.parseInt(jtMatriculaChan2.getText()));
+            aux2.setAnoFabricacion(Integer.parseInt(jtAgeChan2.getText()));
+            datosVelero.modificacion(oldVelero, aux2);
         } else if (e.getSource() == jbtShow) { //muestra el panel consulta
             jpMain.setComponentZOrder(jscrollPanel, 1);
             jscrollPanel.setVisible(true);
@@ -285,12 +283,11 @@ public class Ventana extends JInternalFrame implements ActionListener, InternalF
             jpChange2.setVisible(false);
             jpNavigate.setVisible(false);
         } else if (e.getSource() == jbShowByNumberPlate) {//muestra datos del barco por el boton ok en consulta
-//            int auxMatricula;
-//            String infoBarco;
-//            auxMatricula = Integer.parseInt(jtShowByNumberPlate.getText().trim());
-//            infoBarco = datosFichero.consulta(auxMatricula);
-//            textArea.setText(infoBarco);
-        }  
+            Velero aux = new Velero();
+            aux.setMatricula(Integer.parseInt(jtShowByNumberPlate.getText().trim()));
+            Velero consulta =(Velero) datosVelero.consulta(aux);
+            textArea.setText(consulta.toString());
+        }
     }
 
     public void rellenar(Barco aux) {
