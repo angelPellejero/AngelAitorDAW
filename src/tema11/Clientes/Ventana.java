@@ -206,10 +206,10 @@ public class Ventana extends JFrame implements ActionListener, WindowListener {
             }
         } else if (e.getSource() == jbChange2) {
             Cliente aux = new Cliente();
-            aux.setNombre(jtNameAdd.getText().trim());
-            aux.setApellido(jtLasNameAdd.getText().trim());
-            aux.setDni(Integer.parseInt(jtIDadd.getText().trim()));
-            aux.setEdad(Integer.parseInt(jtAgeAdd.getText().trim()));
+            aux.setNombre(jtNameChange.getText().trim());
+            aux.setApellido(jtLasNameChange.getText().trim());
+            aux.setDni(Integer.parseInt(jtIDChange.getText().trim()));
+            aux.setEdad(Integer.parseInt(jtAgeChange.getText().trim()));
             if (datosCliente.add(aux)) {
                 JOptionPane.showMessageDialog(this, "El cliente fue cambiado ", "ok", 1);
             } else {
