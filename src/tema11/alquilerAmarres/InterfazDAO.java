@@ -9,7 +9,6 @@ public interface InterfazDAO {
     public abstract boolean baja(Object matricula);
 
     public abstract boolean modificacion(Object objectOld, Object objectNew);
-    
 
     public abstract Object consulta(Object object);
 
