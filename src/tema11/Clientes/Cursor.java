@@ -67,7 +67,7 @@ public class Cursor {
         try {
             rs = stm.executeQuery("select * from datos;");
             while (rs.next()){
-                sb.append(rs.getString(1)+ " " + rs.getString(2)+ " " + rs.getInt(3)+ " " + rs.getInt(4)+ "\n");
+                sb.append("Nombre: "+rs.getString(1)+ " Apelldios: " + rs.getString(2)+ " DNI: " + rs.getInt(3)+ " Edad: " + rs.getInt(4)+ "\n");
             }
             return sb.toString();
         } catch (SQLException ex) {
@@ -83,6 +83,9 @@ public class Cursor {
     public boolean guardarCambios(){
         try {
             stm.close();
+            if(rs!=null){
+                rs.close();
+            }
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Cursor.class.getName()).log(Level.SEVERE, null, ex);
