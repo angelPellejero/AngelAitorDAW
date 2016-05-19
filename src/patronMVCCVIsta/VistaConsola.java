@@ -38,10 +38,10 @@ public class VistaConsola implements InterfazVistas {
                         System.out.println("Solo puedes pasar al operando numeros y el tipo de operacion solo puede ser '+' o '-'");
                     }
                 } while (!(Character.isDigit(op1.charAt(0)) || Character.isDigit(op2.charAt(0)) || op.equals("+") || op.equals("-")));
-                objecto.actionPerformed(new ActionEvent(objecto, 1, "BotonCalcular"));
+                objecto.actionPerformed(new ActionEvent(this, 1, "BotonCalcular"));
                 System.out.println("Resultado de la operacion: " + res);
             } else if (accion.equals(accion2)) {
-                objecto.actionPerformed(new ActionEvent(objecto, 2, "BotonSalir"));
+                objecto.actionPerformed(new ActionEvent(this, 2, "BotonSalir"));
             }
         }
     }
